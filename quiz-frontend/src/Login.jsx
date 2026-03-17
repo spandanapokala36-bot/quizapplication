@@ -45,55 +45,83 @@ function Login() {
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600">
+return (
+  <div className="min-h-screen flex bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500">
 
-      <form 
+    {/* LEFT SIDE */}
+    <div className="hidden md:flex w-1/2 items-center justify-center p-10 text-white relative overflow-hidden">
+      
+      {/* Soft glow circles */}
+      <div className="absolute w-72 h-72 bg-white/10 rounded-full top-10 left-10 blur-3xl"></div>
+      <div className="absolute w-72 h-72 bg-pink-400/20 rounded-full bottom-10 right-10 blur-3xl"></div>
+
+      <div className="relative z-10 animate-fadeIn">
+        <h1 className="text-4xl font-bold mb-4">Quiz App</h1>
+        <p className="text-lg opacity-90">
+          Test your knowledge. Track your progress. Compete with others.
+        </p>
+      </div>
+    </div>
+
+    {/* RIGHT SIDE */}
+    <div className="flex w-full md:w-1/2 items-center justify-center bg-white/80 backdrop-blur-sm">
+
+      <form
         onSubmit={handleLogin}
-        className="bg-white p-10 rounded-3xl shadow-2xl w-[400px]"
+        className="bg-white p-10 rounded-2xl shadow-xl w-[380px] animate-slideUp"
       >
 
-        <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
-          Welcome Back 👋
+        <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+          Sign in to your account
         </h2>
 
-        <div className="mb-5">
-          <label className="block text-gray-600 mb-2 text-sm font-medium">
-            Email
+        {/* Email */}
+        <div className="mb-4">
+          <label className="block text-gray-600 text-sm mb-1">
+            Email address
           </label>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg
+                       focus:outline-none focus:ring-2 focus:ring-purple-500
+                       focus:scale-[1.02] transition-all duration-200"
           />
         </div>
 
-        <div className="mb-7">
-          <label className="block text-gray-600 mb-2 text-sm font-medium">
+        {/* Password */}
+        <div className="mb-6">
+          <label className="block text-gray-600 text-sm mb-1">
             Password
           </label>
           <input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg
+                       focus:outline-none focus:ring-2 focus:ring-purple-500
+                       focus:scale-[1.02] transition-all duration-200"
           />
         </div>
 
-        <button 
+        {/* Button */}
+        <button
           type="submit"
-          className="w-full bg-indigo-500 text-white py-3 rounded-xl font-semibold hover:bg-indigo-600"
+          className="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
+                     text-white py-2 rounded-lg font-medium
+                     hover:scale-105 active:scale-95
+                     transition-all duration-200 shadow-md hover:shadow-lg"
         >
-          Login
+          Sign In
         </button>
 
-        <p className="text-center mt-6 text-sm text-gray-600">
-          Don't have an account?{" "}
+        <p className="text-sm text-gray-600 mt-5 text-center">
+          Don’t have an account?{" "}
           <span
-            className="text-indigo-600 cursor-pointer"
+            className="text-purple-600 cursor-pointer font-medium hover:underline"
             onClick={() => navigate("/register")}
           >
             Register
@@ -102,7 +130,8 @@ function Login() {
 
       </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;
