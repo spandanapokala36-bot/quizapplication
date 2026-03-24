@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 function AddQuestion() {
 
-  const { quizId } = useParams(); // ✅ get quizId from URL
+  const { quizId } = useParams(); 
   const navigate = useNavigate();
 
   const [questionTitle, setQuestionTitle] = useState("");
@@ -16,10 +16,13 @@ function AddQuestion() {
 
   const token = localStorage.getItem("token");
 
+  // ✅ LIVE BACKEND URL
+  const BASE_URL = "https://quiz-backend-yli8.onrender.com";
+
   const handleAdd = async () => {
     try {
       await axios.post(
-        `http://localhost:8080/api/admin/add-question/${quizId}`,
+        `${BASE_URL}/api/admin/add-question/${quizId}`,
         {
           questionTitle,
           optionA,
@@ -37,7 +40,6 @@ function AddQuestion() {
 
       alert("Question Added Successfully ✅");
 
-      // ✅ Clear form after adding
       setQuestionTitle("");
       setOptionA("");
       setOptionB("");
@@ -46,6 +48,7 @@ function AddQuestion() {
       setCorrectAnswer("");
 
     } catch (err) {
+      console.error(err);
       alert("Error Adding Question ❌");
     }
   };
@@ -53,12 +56,10 @@ function AddQuestion() {
   return (
     <div className="min-h-screen flex bg-gray-100">
 
-      {/* MAIN CONTENT */}
       <div className="flex-1 p-10 flex justify-center items-start">
 
         <div className="bg-white p-8 rounded-2xl shadow-lg w-[550px]">
 
-          {/* HEADER */}
           <h1 className="text-2xl font-bold mb-2 text-gray-800">
             📝 Add Question
           </h1>
@@ -67,7 +68,6 @@ function AddQuestion() {
             Adding to Quiz ID: <span className="font-semibold">{quizId}</span>
           </p>
 
-          {/* FORM */}
           <div className="space-y-3">
 
             <input
@@ -118,7 +118,6 @@ function AddQuestion() {
               className="border p-3 w-full rounded-lg"
             />
 
-            {/* BUTTON */}
             <button
               onClick={handleAdd}
               className="w-full bg-gradient-to-r from-indigo-500 to-purple-500
@@ -129,7 +128,6 @@ function AddQuestion() {
               Add Question
             </button>
 
-            {/* DONE BUTTON */}
             <button
               onClick={() => navigate("/admin")}
               className="w-full text-indigo-600 mt-3 underline"

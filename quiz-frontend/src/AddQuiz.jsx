@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 function AddQuiz() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
@@ -8,32 +9,36 @@ function AddQuiz() {
 
   const token = localStorage.getItem("token");
 
-const handleCreate = async () => {
-  try {
-    const response = await axios.post(
-      "http://localhost:8080/api/admin/create-quiz",
-      {
-        title: title,
-        durationMinutes: duration
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
+  // ✅ LIVE BACKEND URL
+  const BASE_URL = "https://quiz-backend-yli8.onrender.com";
+
+  const handleCreate = async () => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/admin/create-quiz`,
+        {
+          title: title,
+          durationMinutes: duration
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
         }
-      }
-    );
+      );
 
-    const quizId = response.data.id;
+      const quizId = response.data.id;
 
-    alert("Quiz Created Successfully ✅");
+      alert("Quiz Created Successfully ✅");
 
-    // 👉 Redirect with quizId
-    navigate(`/admin/add-question/${quizId}`);
+      // 👉 Redirect with quizId
+      navigate(`/admin/add-question/${quizId}`);
 
-  } catch (err) {
-    alert("Error Creating Quiz ❌");
-  }
-};
+    } catch (err) {
+      console.error(err);
+      alert("Error Creating Quiz ❌");
+    }
+  };
 
   return (
     <div className="min-h-screen p-10 bg-gray-100">
