@@ -16,7 +16,7 @@ function Register() {
     try {
 
       const url =
-        role === "ADMIN"
+        role === "ROLE_ADMIN"
           ? "http://localhost:8080/api/auth/register-admin"
           : "http://localhost:8080/api/auth/register-user";
 

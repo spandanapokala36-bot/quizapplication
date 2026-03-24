@@ -8,14 +8,16 @@ import PrivateRoute from "./PrivateRoute";
 import AddQuiz from "./AddQuiz";
 import AddQuestion from "./AddQuestion";
 import AdminLeaderboard from "./AdminLeaderboard";
+
 function App() {
   return (
     <Routes>
-      {/* Public Routes */}
+
+      {/* PUBLIC ROUTES */}
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Protected User Routes */}
+      {/* USER ROUTES */}
       <Route
         path="/dashboard"
         element={
@@ -33,15 +35,18 @@ function App() {
           </PrivateRoute>
         }
       />
-    <Route 
-  path="/admin/leaderboard" 
-  element={
-    <PrivateRoute requiredRole="ROLE_ADMIN">
-      <AdminLeaderboard />
-    </PrivateRoute>
-  } 
-/>
-      {/* Protected Admin Route */}
+
+      {/* USER LEADERBOARD (optional) */}
+      <Route
+        path="/leaderboard"
+        element={
+          <PrivateRoute>
+            <AdminLeaderboard />
+          </PrivateRoute>
+        }
+      />
+
+      {/* ADMIN DASHBOARD */}
       <Route
         path="/admin"
         element={
@@ -50,8 +55,37 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/admin/add-quiz" element={<AddQuiz />} />
-<Route path="/admin/add-question" element={<AddQuestion />} />
+
+      {/* ADD QUIZ */}
+      <Route
+        path="/admin/add-quiz"
+        element={
+          <PrivateRoute requiredRole="ROLE_ADMIN">
+            <AddQuiz />
+          </PrivateRoute>
+        }
+      />
+
+      {/* 🔥 ADD QUESTION (FIXED ROUTE WITH quizId) */}
+      <Route
+        path="/admin/add-question/:quizId"
+        element={
+          <PrivateRoute requiredRole="ROLE_ADMIN">
+            <AddQuestion />
+          </PrivateRoute>
+        }
+      />
+
+      {/* ADMIN LEADERBOARD */}
+      <Route
+        path="/admin/leaderboard"
+        element={
+          <PrivateRoute requiredRole="ROLE_ADMIN">
+            <AdminLeaderboard />
+          </PrivateRoute>
+        }
+      />
+
     </Routes>
   );
 }

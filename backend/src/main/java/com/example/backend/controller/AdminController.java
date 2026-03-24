@@ -2,17 +2,21 @@ package com.example.backend.controller;
 
 import com.example.backend.entity.Question;
 import com.example.backend.entity.Score;
+import com.example.backend.entity.Quiz;
 import com.example.backend.repository.QuestionRepository;
 import com.example.backend.repository.ScoreRepository;
+import com.example.backend.repository.QuizRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import com.example.backend.entity.Quiz;
-import com.example.backend.repository.QuizRepository;
+
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
 
+    
     @Autowired
     private QuestionRepository questionRepository;
 
@@ -20,30 +24,31 @@ public class AdminController {
     private ScoreRepository scoreRepository;
 
     @Autowired
-private QuizRepository QuizRepository;
+    private QuizRepository quizRepository;
 
-@PostMapping("/add-question/{quizId}")
-public String addQuestion(@PathVariable Long quizId,
-                          @RequestBody Question question) {
+    // ✅ CREATE QUIZ (FIXED)
+    @PostMapping("/create-quiz")
+    public Quiz createQuiz(@RequestBody Quiz quiz) {
+        Quiz savedQuiz = quizRepository.save(quiz);
+        return savedQuiz; // 🔥 returns id + data
+    }
 
-    Quiz quiz = quizRepository.findById(quizId)
-            .orElseThrow(() -> new RuntimeException("Quiz not found"));
+    // ✅ ADD QUESTION TO QUIZ
+    @PostMapping("/add-question/{quizId}")
+    public String addQuestion(@PathVariable Long quizId,
+                             @RequestBody Question question) {
 
-    question.setQuiz(quiz);
+        Quiz quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new RuntimeException("Quiz not found"));
 
-    questionRepository.save(question);
+        question.setQuiz(quiz);
 
-    return "Question Added Successfully";
-}
+        questionRepository.save(question);
 
-    @Autowired
-private QuizRepository quizRepository;
+        return "Question Added Successfully";
+    }
 
-@PostMapping("/create-quiz")
-public String createQuiz(@RequestBody Quiz quiz) {
-    quizRepository.save(quiz);
-    return "Quiz Created Successfully";
-}
+    // ✅ GET ALL SCORES (LEADERBOARD)
     @GetMapping("/scores")
     public List<Score> getAllScores() {
         return scoreRepository.findAll();

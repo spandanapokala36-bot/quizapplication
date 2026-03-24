@@ -1,36 +1,39 @@
 import { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 function AddQuiz() {
-
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState("");
 
   const token = localStorage.getItem("token");
 
-  const handleCreate = async () => {
-    try {
-      await axios.post(
-        "http://localhost:8080/api/admin/create-quiz",
-        {
-          title: title,
-          durationMinutes: duration
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+const handleCreate = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/admin/create-quiz",
+      {
+        title: title,
+        durationMinutes: duration
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      }
+    );
 
-      alert("Quiz Created Successfully ✅");
-      setTitle("");
-      setDuration("");
+    const quizId = response.data.id;
 
-    } catch (err) {
-      alert("Error Creating Quiz ❌");
-    }
-  };
+    alert("Quiz Created Successfully ✅");
+
+    // 👉 Redirect with quizId
+    navigate(`/admin/add-question/${quizId}`);
+
+  } catch (err) {
+    alert("Error Creating Quiz ❌");
+  }
+};
 
   return (
     <div className="min-h-screen p-10 bg-gray-100">
