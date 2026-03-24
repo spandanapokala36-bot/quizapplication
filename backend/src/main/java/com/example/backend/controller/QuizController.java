@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/quiz")
+@CrossOrigin(origins = "*") // ✅ ADDED ONLY THIS LINE
 public class QuizController {
 
     @Autowired
