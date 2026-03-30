@@ -18,15 +18,25 @@ function Register() {
 
     try {
 
+      // ✅ Fix 1: Wake up backend (Render sleep issue)
+      await fetch(BASE_URL);
+
       const url =
         role === "ADMIN"
           ? `${BASE_URL}/api/auth/register-admin`
           : `${BASE_URL}/api/auth/register-user`;
 
-      await axios.post(url, {
-        email,
-        password
-      });
+      // ✅ Fix 2: Add credentials for CORS
+      await axios.post(
+        url,
+        {
+          email,
+          password
+        },
+        {
+          withCredentials: true
+        }
+      );
 
       alert("Registration Successful 🎉");
       navigate("/");
@@ -76,6 +86,7 @@ function Register() {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg
                          focus:outline-none focus:ring-2 focus:ring-purple-500
                          focus:scale-[1.02] transition-all duration-200"
+              required
             />
           </div>
 
@@ -91,6 +102,7 @@ function Register() {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg
                          focus:outline-none focus:ring-2 focus:ring-purple-500
                          focus:scale-[1.02] transition-all duration-200"
+              required
             />
           </div>
 
