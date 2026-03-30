@@ -21,7 +21,10 @@ function Login() {
         {
           email: email,
           password: password,
-        }
+        },
+         {
+    withCredentials: true
+       }
       );
 
       const token = response.data;

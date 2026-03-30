@@ -19,7 +19,6 @@ function Register() {
     try {
 
       // ✅ Fix 1: Wake up backend (Render sleep issue)
-      await fetch(BASE_URL);
 
       const url =
         role === "ADMIN"
