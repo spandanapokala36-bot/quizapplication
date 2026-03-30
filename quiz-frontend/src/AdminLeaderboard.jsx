@@ -7,7 +7,7 @@ function AdminLeaderboard() {
   const [quizId, setQuizId] = useState("");
 
   // ✅ LIVE BACKEND URL
-  const BASE_URL = "https://quiz-backend-yli8.onrender.com";
+  const BASE_URL = "https://quiz-backend-y1i8.onrender.com";
 
   const fetchLeaderboard = async () => {
     try {

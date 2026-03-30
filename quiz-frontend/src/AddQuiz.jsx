@@ -10,7 +10,7 @@ function AddQuiz() {
   const token = localStorage.getItem("token");
 
   // ✅ LIVE BACKEND URL
-  const BASE_URL = "https://quiz-backend-yli8.onrender.com";
+  const BASE_URL = "https://quiz-backend-y1i8.onrender.com";
 
   const handleCreate = async () => {
     try {
